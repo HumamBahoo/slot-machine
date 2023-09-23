@@ -1,3 +1,6 @@
+import random
+
+
 class SlotMachine:
     def __init__(self) -> None:
         self.title: str = "Basic Slot Machine"
@@ -25,7 +28,7 @@ class SlotMachine:
                 count = int(input(f"How many lines would you like to have ({self.min_lines_count} to {self.max_lines_count})? "))
 
                 if self.min_lines_count <= count <= self.max_lines_count:
-                    self.rows_count = count
+                    self.lines_count = count
                     break
                 else:
                     print(f"Please enter a number between {self.min_lines_count} and {self.max_lines_count}")
@@ -65,13 +68,13 @@ class SlotMachine:
 
         while True:
             try:
-                count = int(input(f"How many lines would you like to select (1-{self.rows_count})? "))
+                count = int(input(f"How many lines would you like to select (1-{self.lines_count})? "))
 
-                if 1 <= count <= self.rows_count:
+                if 1 <= count <= self.lines_count:
                     self.selected_lines_count = count
                     break
                 else:
-                    print(f"Please enter a number between 1 and {self.rows_count}.")
+                    print(f"Please enter a number between 1 and {self.lines_count}.")
 
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
@@ -98,3 +101,30 @@ class SlotMachine:
 
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
+
+    def spin_reels(self) -> None:
+        """
+        Simulates spinning of slot machine reels.
+        """
+
+        # reset reels
+        self.reels = []
+
+        # build pool
+        pool = []
+        for symbol, weight in self.symbols_weight.items():
+            pool += symbol * weight
+
+        # randomly fill out each reel with symbols from the pool
+        for _ in range(self.reels_count):
+            current_reel_symbols = []
+
+            for _ in range(self.lines_count):
+                picked_symbol = random.choice(pool)
+                pool.remove(picked_symbol)
+
+                # append to the current reel
+                current_reel_symbols.append(picked_symbol)
+
+            # append the current reel to the list of reels
+            self.reels.append(current_reel_symbols)
