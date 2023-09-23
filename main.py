@@ -17,8 +17,12 @@ def main():
     machine.set_bet_amount()
     machine.set_selected_lines_count()
 
+    clear_terminal()
+
     print(f"Balance: ${machine.balance}, Bet Amount: ${machine.bet_amount}, Selected Lines: {machine.selected_lines_count}\n")
-    print(f"Total Bet: ${machine.selected_lines_count * machine.bet_amount}\n")
+    print(f"Total Bet: ${machine.selected_lines_count * machine.bet_amount}, Total Winning: ${machine.total_winnings}\n")
+
+    input("Press [Enter] to spin")
 
     while True:
         clear_terminal()
@@ -27,7 +31,10 @@ def main():
 
         print(f"Balance: ${machine.balance}, Bet Amount: ${machine.bet_amount}, Selected Lines: {machine.selected_lines_count}\n")
 
-        print(f"Total Bet: ${machine.selected_lines_count * machine.bet_amount}\n")
+        print(f"Total Bet: ${machine.selected_lines_count * machine.bet_amount}, Total Winning: ${machine.total_winnings}\n")
+
+        machine.display_reels()
+        print("")
 
         input("Press [Enter] to spin again.\n")
 

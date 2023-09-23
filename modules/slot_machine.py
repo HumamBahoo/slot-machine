@@ -17,7 +17,7 @@ class SlotMachine:
         self.balance = 0
         self.player_credit: str = 1000.00
         self.reels: list = []
-        self.total_winning: float = 0
+        self.total_winnings: float = 0
 
     def set_lines_count(self) -> None:
         """
@@ -108,7 +108,7 @@ class SlotMachine:
         winning_lines = self.get_winning_lines()
         amount = self.calculate_winning(winning_lines)
         self.update_balance(amount)
-        self.update_total_winning(amount)
+        self.update_total_winnings(amount)
 
     def spin_reels(self) -> None:
         """
@@ -171,5 +171,41 @@ class SlotMachine:
     def update_balance(self, amount: float) -> None:
         self.balance += amount
 
-    def update_total_winning(self, amount: float) -> None:
-        self.total_winning += amount
+    def update_total_winnings(self, amount: float) -> None:
+        self.total_winnings += amount
+
+    def display_reels(self, winning_lines: dict = {}) -> None:
+        """
+        Displays the current state of slot machine reels and the current winning lines if provided
+        """
+
+        # transpose and print details
+        for i in range(self.lines_count):
+            for j in range(self.reels_count):
+                # if this is not the last slot
+                if j != self.reels_count - 1:
+                    # if this is the first slot from the line
+                    if j == 0:
+                        if i < self.selected_lines_count:
+                            print(f"Line {i+1} [selected]: {self.reels[j][i]}", end=" | ")
+
+                        else:
+                            print(f"Line {i+1}           : {self.reels[j][i]}", end=" | ")
+
+                    # not the first slot
+                    else:
+                        print(self.reels[j][i], end=" | ")
+
+                # last slot in line
+                else:
+                    # check if there is a win on this line
+                    if i in winning_lines:
+                        print(self.reels[j][i], end=" => Win: $")
+
+                        symbol_payout = self.payout_table[winning_lines[i]] * self.bet_amount
+
+                        print(symbol_payout)
+
+                    # print last slot only
+                    else:
+                        print(self.reels[j][i])
