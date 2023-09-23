@@ -6,9 +6,9 @@ class SlotMachine:
         self.title: str = "Basic Slot Machine"
         self.symbols_weight = {"A": 5, "B": 10, "C": 15, "D": 30, "E": 40}
         self.payout_table = {"A": 50, "B": 25, "C": 20, "D": 15, "E": 10}
-        self.lines_count: int = 3
-        self.min_lines_count = 1
-        self.max_lines_count = 5
+        self.rows_count: int = 3
+        self.min_rows_count = 1
+        self.max_rows_count = 5
         self.reels_count: int = 3
         self.bet_amount: float = 1
         self.min_bet_amount: float = 1
@@ -19,27 +19,27 @@ class SlotMachine:
         self.reels: list = []
         self.total_winnings: float = 0
 
-    def set_lines_count(self) -> None:
+    def set_rows_count(self) -> None:
         """
-        Prompts user to select slot machine lines count within the allowed range (1 to 5)
+        Prompts user to select number of rows the slot machine has within the allowed range (1 to 5)
         """
 
         while True:
             try:
-                count = int(input(f"How many lines would you like to have ({self.min_lines_count} to {self.max_lines_count})? "))
+                count = int(input(f"How many rows would you like to have ({self.min_rows_count} to {self.max_rows_count})? "))
 
-                if self.min_lines_count <= count <= self.max_lines_count:
-                    self.lines_count = count
+                if self.min_rows_count <= count <= self.max_rows_count:
+                    self.rows_count = count
                     break
                 else:
-                    print(f"Please enter a number between {self.min_lines_count} and {self.max_lines_count}")
+                    print(f"Please enter a number between {self.min_rows_count} and {self.max_rows_count}")
 
             except ValueError:
                 print("Invalid input. Please enter valid a number.")
 
     def set_bet_amount(self) -> None:
         """
-        Prompts user to set the bet amount within the allowed range ($1 to $100).
+        Prompts user to set the bet amount the would like to place per line within the allowed range ($1 to $100).
         It will validate if there is enough balance to successfully set the desired bet amount.
         """
 
@@ -69,13 +69,13 @@ class SlotMachine:
 
         while True:
             try:
-                count = int(input(f"How many lines would you like to select (1-{self.lines_count})? "))
+                count = int(input(f"How many lines would you like to select (1-{self.rows_count})? "))
 
-                if 1 <= count <= self.lines_count:
+                if 1 <= count <= self.rows_count:
                     self.selected_lines_count = count
                     break
                 else:
-                    print(f"Please enter a number between 1 and {self.lines_count}.")
+                    print(f"Please enter a number between 1 and {self.rows_count}.")
 
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
@@ -127,7 +127,7 @@ class SlotMachine:
         for _ in range(self.reels_count):
             current_reel_symbols = []
 
-            for _ in range(self.lines_count):
+            for _ in range(self.rows_count):
                 picked_symbol = random.choice(pool)
                 pool.remove(picked_symbol)
 
@@ -180,7 +180,7 @@ class SlotMachine:
         """
 
         # transpose and print details
-        for i in range(self.lines_count):
+        for i in range(self.rows_count):
             for j in range(self.reels_count):
                 # if this is not the last slot
                 if j != self.reels_count - 1:
