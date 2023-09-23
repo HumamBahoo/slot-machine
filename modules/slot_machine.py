@@ -12,6 +12,7 @@ class SlotMachine:
         self.max_bet_amount: float = 100
         self.selected_lines_count: int = 1
         self.balance = 0
+        self.player_credit: str = 1000.00
         self.reels = []
 
     def set_lines_count(self) -> None:
@@ -71,6 +72,29 @@ class SlotMachine:
                     break
                 else:
                     print(f"Please enter a number between 1 and {self.rows_count}.")
+
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+
+    def add_to_balance(self) -> None:
+        """
+        Prompts user to select the amount of funds they would like to deposit into the slot machine from their credit.
+        """
+
+        while True:
+            try:
+                amount = float(input(f"How much would you like to deposit ($1-${self.player_credit})? $"))
+
+                if 1 <= amount <= self.player_credit:
+                    self.balance += amount
+                    self.player_credit -= amount
+                    print(f"Funds added. Your current balance is ${self.balance} and you have ${self.player_credit}.")
+                    break
+                else:
+                    if amount < 1:
+                        print("The minimum amount to deposit is $1. Please try again.")
+                    else:
+                        print(f"You only have ${self.player_credit}. Please try again.")
 
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
