@@ -16,7 +16,8 @@ class SlotMachine:
         self.selected_lines_count: int = 1
         self.balance = 0
         self.player_credit: str = 1000.00
-        self.reels = []
+        self.reels: list = []
+        self.total_winning: float = 0
 
     def set_lines_count(self) -> None:
         """
@@ -102,6 +103,13 @@ class SlotMachine:
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
 
+    def spin(self) -> None:
+        self.spin_reels()
+        winning_lines = self.get_winning_lines()
+        amount = self.calculate_winning(winning_lines)
+        self.update_balance(amount)
+        self.update_total_winning(amount)
+
     def spin_reels(self) -> None:
         """
         Simulates spinning of slot machine reels.
@@ -128,3 +136,40 @@ class SlotMachine:
 
             # append the current reel to the list of reels
             self.reels.append(current_reel_symbols)
+
+    def get_winning_lines(self) -> dict:
+        winning_lines = {}
+
+        for i in range(self.selected_lines_count):
+            line_symbols_list = []
+
+            for reel in self.reels:
+                line_symbols_list.append(reel[i])
+
+            # find if all symbols match based on the first one
+            if all(symbol == line_symbols_list[0] for symbol in line_symbols_list):
+                winning_lines[i] = line_symbols_list[0]
+
+        return winning_lines
+
+    def calculate_winning(self, winning_lines: dict) -> float:
+        """
+        Returns negative number representing the amount lost, and a positive number representing the total amount won.
+        """
+
+        calculated_value = 0
+
+        if len(winning_lines) == 0:
+            calculated_value = -(self.bet_amount * self.selected_lines_count)
+        else:
+            for _, line_symbol in winning_lines.items():
+                payout = self.payout_table[line_symbol] * self.bet_amount
+                calculated_value += payout
+
+        return calculated_value
+
+    def update_balance(self, amount: float) -> None:
+        self.balance += amount
+
+    def update_total_winning(self, amount: float) -> None:
+        self.total_winning += amount
