@@ -12,43 +12,67 @@ def main():
 
     machine = SlotMachine()
 
-    machine.prompt_for_rows_count()
-    machine.add_to_balance()
-    machine.prompt_for_bet_amount()
-    machine.prompt_for_selected_lines_count()
+    # set the title
+    machine.title = "A Basic Slot Machine"
 
-    clear_terminal()
+    # set the number of rows
+    machine.rows_count = 5
 
-    print(f"Balance: ${machine.balance}, Bet Amount: ${machine.bet_amount}, Selected Lines: {machine.selected_lines_count}\n")
-    print(f"Total Bet: ${machine.selected_lines_count * machine.bet_amount}, Total Winning: ${machine.total_winnings}\n")
+    # add to balance
+    machine.add_to_balance(1000)
+
+    # set the bet amount
+    #   validate if there is enough balance to make this bet
+    machine.bet_amount = 10
+
+    # set the selected lines count
+    #   validate if there is enough balance when increasing the number of selected lines
+    machine.selected_lines_count = 5
+
+    print(f"Title: {machine.title}\n")
+
+    print(f"Rows Count: {machine.rows_count} | Balance: ${machine.balance:.2f}")
+    print(f"Bet Amount: ${machine.bet_amount:.2f} | Selected Lines: {machine.selected_lines_count}")
+    print(f"Total Bet: ${machine.bet_amount * machine.selected_lines_count:.2f} | Total Winnings: ${machine.total_winnings_amount}\n\n")
 
     input("Press [Enter] to spin")
 
     while True:
+        # spin
         machine.spin()
 
-        winning_lines = machine.get_winning_lines()
-        amount_won = machine.calculate_winning(winning_lines)
+        # find if there are winning lines
+        machine.update_winning_lines()
 
-        machine.update_balance(amount_won)
-        machine.update_total_winnings(amount_won)
+        # calculate winning amount of lost amount
+        amount = machine.calculate_spin_outcome()
 
-        clear_terminal()
-
-        print(f"Balance: ${machine.balance}, Bet Amount: ${machine.bet_amount}, Selected Lines: {machine.selected_lines_count}\n")
-        print(f"Total Bet: ${machine.selected_lines_count * machine.bet_amount}, Total Winning: ${machine.total_winnings}\n")
-
-        machine.display_reels(winning_lines)
-        print("")
-
-        if amount_won > 0:
-            print(f"You've won! Total prize: ${amount_won}")
+        # update balance and total winning based on win or loss outcome
+        if machine.has_won:
+            machine.add_to_balance(amount)
+            machine.add_to_total_winnings_amount(amount)
         else:
-            print(f"You've lost!")
+            machine.subtract_from_balance(amount)
+            machine.subtract_from_total_winnings_amount(amount)
 
+        # clean screen and display updated information
+        clear_terminal()
+        print(f"Title: {machine.title}\n")
+        print(f"Rows Count: {machine.rows_count} | Balance: ${machine.balance:.2f}")
+        print(f"Bet Amount: ${machine.bet_amount:.2f} | Selected Lines: {machine.selected_lines_count}")
+        print(f"Total Bet: ${machine.bet_amount * machine.selected_lines_count:.2f} | Total Winnings: ${machine.total_winnings_amount}\n\n")
+
+        # display reels
+        machine.display_reels()
         print("")
 
-        input("Press [Enter] to spin again.\n")
+        # display results with total money won, if won
+        if machine.has_won:
+            print(f"You've Won! Total Prize: ${amount}\n")
+        else:
+            print(f"You've Lost!\n")
+
+        input("Press [Enter] to spin again...")
 
 
 if __name__ == "__main__":
