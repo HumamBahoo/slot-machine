@@ -1,9 +1,14 @@
 import random
 
 
+# Custom Exception
+class SlotMachineError(Exception):
+    pass
+
+
 class SlotMachine:
     def __init__(self) -> None:
-        self._title: str = None
+        self._title: str = ""
         self._symbols_weight: dict[str, int] = {"A": 5, "B": 10, "C": 15, "D": 30, "E": 40}
         self._payout_table: dict[str, int] = {"A": 50, "B": 25, "C": 20, "D": 15, "E": 10}
         self._min_rows_count: int = 1
@@ -29,7 +34,7 @@ class SlotMachine:
         if not title == "" or not title == None:
             self._title = title
         else:
-            raise ValueError("Title must not be empty.")
+            raise SlotMachineError("Title must not be empty")
 
     @property
     def symbols_weight(self) -> dict[str, int]:
@@ -56,7 +61,7 @@ class SlotMachine:
         if self.min_rows_count <= count <= self.max_rows_count:
             self._rows_count = count
         else:
-            raise ValueError(f"Rows count must be between {self.min_rows_count} and {self.max_rows_count}.")
+            raise SlotMachineError(f"Rows count must be between {self.min_rows_count} and {self.max_rows_count}")
 
     @property
     def reels_count(self) -> int:
@@ -79,7 +84,7 @@ class SlotMachine:
         if self.min_bet_amount <= amount <= self.max_bet_amount:
             self._bet_amount = amount
         else:
-            raise ValueError(f"Bet amount must be between ${self.min_bet_amount} and ${self.max_bet_amount}.")
+            raise SlotMachineError(f"Bet amount must be between ${self.min_bet_amount} and ${self.max_bet_amount}")
 
     @property
     def selected_lines_count(self) -> int:
@@ -90,14 +95,17 @@ class SlotMachine:
         if 1 <= count <= self.rows_count:
             self._selected_lines_count = count
         else:
-            raise ValueError(f"Selected lines count must be between 1 and the number of machine lines ({self.rows_count}).")
+            raise SlotMachineError(f"Selected lines count must be between 1 and the number of machine lines ({self.rows_count})")
 
     @property
     def balance(self) -> float:
         return self._balance
 
     def add_to_balance(self, amount: float) -> None:
-        self._balance += amount
+        if amount > 0:
+            self._balance += amount
+        else:
+            raise SlotMachineError(f"Amount must be greater than 0.")
 
     def subtract_from_balance(self, amount: float) -> None:
         self._balance -= amount
