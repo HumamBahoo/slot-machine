@@ -241,3 +241,13 @@ class SlotMachine:
 
             # print the result
             print(f"Line {i+1} {line_status_string}: {line_symbols_string} {winning_amount_string}")
+
+    def reset_slot_machine(self):
+        self._rows_count: int = 1
+        self._bet_amount: float = 1
+        self._selected_lines_count: int = 1
+        self._balance: float = 0
+        self._reels: list[list[str]] = []
+        self._total_winnings_amount: float = 0
+        self._winning_lines: dict[int, str] = {}
+        self._has_won: bool = False
