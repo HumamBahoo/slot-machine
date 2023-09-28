@@ -140,25 +140,36 @@ def main():
 
                 else:
                     while True:
-                        play_game(slot_machine)
+                        if slot_machine.balance > slot_machine.bet_amount * slot_machine.selected_lines_count:
+                            play_game(slot_machine)
 
-                        # after spin selection
-                        options = []
-                        prompt_message = "Press [Enter] to spin again, or enter [B] to go back to previous menu"
-                        valid_selections = ["b"]
+                            # after spin selection
+                            options = []
+                            prompt_message = "Press [Enter] to spin again, or enter [B] to go back to previous menu"
+                            valid_selections = ["b"]
 
-                        after_spin_selection = SlotMachineUI.prompt_for_menu_selection(
-                            slot_machine,
-                            options,
-                            prompt_message,
-                            valid_selections,
-                            True,
-                            False,
-                            False,
-                            False,
-                        )
+                            after_spin_selection = SlotMachineUI.prompt_for_menu_selection(
+                                slot_machine,
+                                options,
+                                prompt_message,
+                                valid_selections,
+                                True,
+                                False,
+                                False,
+                                False,
+                            )
 
-                        if after_spin_selection.lower() == "b":
+                            if after_spin_selection.lower() == "b":
+                                break
+
+                        else:
+                            # clean screen and display updated information
+                            SlotMachineUI.clear_terminal()
+                            SlotMachineUI.print_header(slot_machine)
+                            SlotMachineUI.print_slot_machine_details(slot_machine)
+
+                            print("You don't have enough balance to play. Add funds and try again")
+                            input("Press [Enter] to continue...")
                             break
 
         else:
