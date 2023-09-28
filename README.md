@@ -12,7 +12,7 @@ I aimed for a clean and simple user experience, where the terminal clears up aft
 
 Game settings can be set from the game settings menu
 
-[Game-Menu-Pic]
+![image](https://github.com/HumamBahoo/slot-machine/assets/61947862/ddf5b4cf-1894-46fb-a318-2af09b0a70c9)
 
 ### Reels and Rows/Lines Count
 
@@ -44,6 +44,8 @@ There are 5 symbol with the following payout rate:
 - D: 10
 - E: 5
 
-If a user has made a bet of $5 per line and have selected 2 lines (the total bet is $10). After spinning, only one line matched with a "B", the prize would be **$250** because `$10 * 25 = $250`.
+If a user has made a bet of $5 per line, and after spinning, only one line matched with a "D". The prize would be **$50** because `$5 * 10 = $50`. However, if there is no match (loss), the total bet amount of $10 ($5 * 2 selected lines) will be deducted from the balance.
+
+![image](https://github.com/HumamBahoo/slot-machine/assets/61947862/67734fd2-ce75-446a-97b5-6be3cba418be)
 
 > The `Jackpot` functionality has not been implement.
