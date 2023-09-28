@@ -48,8 +48,6 @@ If a user has made a bet of $5 per line, and after spinning, only one line match
 
 ![image](https://github.com/HumamBahoo/slot-machine/assets/61947862/67734fd2-ce75-446a-97b5-6be3cba418be)
 
-> The `Jackpot` functionality has not been implement.
-
 ## Installation
 
 Using `bash` or `PowerShell`, go to the directory where you want to clone the repo:
