@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a simple text-based slot machine game in the terminal, written in Python for learning purposes.
+This is a simple text-based slot machine game in the terminal, written in Python3 for learning purposes.
 
 ## The User Experience
 
@@ -44,8 +44,24 @@ There are 5 symbol with the following payout rate:
 - D: 10
 - E: 5
 
-If a user has made a bet of $5 per line, and after spinning, only one line matched with a "D". The prize would be **$50** because `$5 * 10 = $50`. However, if there is no match (loss), the total bet amount of $10 ($5 * 2 selected lines) will be deducted from the balance.
+If a user has made a bet of $5 per line, and after spinning, only one line matched with a "D". The prize would be **$50** because `$5 * 10 = $50`. However, if there is no match (loss), the total bet amount of $10 ($5 \* 2 selected lines) will be deducted from the balance.
 
 ![image](https://github.com/HumamBahoo/slot-machine/assets/61947862/67734fd2-ce75-446a-97b5-6be3cba418be)
 
 > The `Jackpot` functionality has not been implement.
+
+## Installation
+
+Using `bash` or `PowerShell`, go to the directory where you want to clone the repo:
+
+```sh
+git clone https://github.com/HumamBahoo/slot-machine.git
+```
+
+Then:
+
+```sh
+python slot-machine/main.py
+```
+
+> Python3 is required.
