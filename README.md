@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a simple text-based slot machine game in the terminal, written in python for learning purposes and following Object-Oriented Programming principles.
+This is a simple text-based slot machine game in the terminal, written in Python for learning purposes.
 
 ## The User Experience
 
